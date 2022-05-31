@@ -96,10 +96,23 @@ class Entity{
 			else{
 				this.angle += (angleDiff * time);	
 			}
+			
+			//move towards location
+			this.acceleration.x = (cursorPos.x - this.position.x)*time;
+			this.acceleration.y = (cursorPos.y - this.position.y)*time;
+		}
+		else{
+			this.acceleration.x = 0;
+			this.acceleration.y = 0;
 		}
 	}
 	moveUnit(time){
-		
+		this.velocity.x += this.acceleration.x * time;
+		this.velocity.y += this.acceleration.y * time;
+		this.position.x += this.velocity.x;
+		this.position.y += this.velocity.y;
+		this.velocity.x *= 0.5;
+		this.velocity.y *= 0.5;
 	}
 }
 

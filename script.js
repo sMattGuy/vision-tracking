@@ -32,6 +32,7 @@ function frame(){
 	//vision check
 	testEntity.findCursor(cursorPos);
 	testEntity.updatePosition(TIME, cursorPos);
+	testEntity.moveUnit(TIME);
 	//draws main screen
 	draw(testEntity);
 	window.requestAnimationFrame(frame);
