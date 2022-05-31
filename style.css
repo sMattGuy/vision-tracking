@@ -1,0 +1,17 @@
+* { 
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	overflow: hidden;
+}
+html {
+	height: 100%;
+}
+body {
+	background: white;
+	min-height: 100%;
+}
+#mainCanvas { 
+	background: #eee;
+	border: 1px solid black;
+}
