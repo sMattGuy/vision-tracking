@@ -6,7 +6,10 @@ class Entity{
 	velocity = {'x':0,'y':0};
 	acceleration = {'x':0,'y':0};
 	spotted = false;
-	
+	//speed modifiers
+	maxspeed = 500;
+	speed = 1;
+	traction = 0.9;
 	constructor(xpos, ypos){
 		this.position.x = xpos;
 		this.position.y = ypos;
@@ -87,32 +90,69 @@ class Entity{
 			
 			if(otherOption < Math.abs(angleDiff)){
 				if(relativeAngle < cursorDeg){
-					this.angle -= (otherOption * time);	
+					this.angle -= (otherOption * time) * speed;	
 				}
 				else{
-					this.angle += (otherOption * time);	
+					this.angle += (otherOption * time) * speed;	
 				}
 			}
 			else{
-				this.angle += (angleDiff * time);	
+				this.angle += (angleDiff * time) * speed;	
 			}
 			
 			//move towards location
-			this.acceleration.x = (cursorPos.x - this.position.x)*time;
-			this.acceleration.y = (cursorPos.y - this.position.y)*time;
+			this.acceleration.x = (cursorPos.x - this.position.x) * this.speed;
+			this.acceleration.y = (cursorPos.y - this.position.y) * this.speed;
 		}
 		else{
 			this.acceleration.x = 0;
 			this.acceleration.y = 0;
 		}
 	}
-	moveUnit(time){
+	moveUnit(time,canvasWidth,canvasHeight){
+		//update velocity
 		this.velocity.x += this.acceleration.x * time;
 		this.velocity.y += this.acceleration.y * time;
-		this.position.x += this.velocity.x;
-		this.position.y += this.velocity.y;
-		this.velocity.x *= 0.5;
-		this.velocity.y *= 0.5;
+		if(Math.abs(this.velocity.x) > this.maxspeed){
+			this.velocity.x = this.maxspeed * (this.velocity.x/Math.abs(this.velocity.x));
+		}
+		if(Math.abs(this.velocity.y) > this.maxspeed){
+			this.velocity.y = this.maxspeed * (this.velocity.y/Math.abs(this.velocity.y));
+		}
+		
+		//update position
+		this.position.x += this.velocity.x * time;
+		this.position.y += this.velocity.y * time;
+		if(this.position.x < 0){
+			this.position.x = 0;
+			this.velocity.x *= -1;
+			this.angle = 180 - this.angle;
+		}
+		if(this.position.x > canvasWidth){
+			this.position.x = canvasWidth;
+			this.velocity.x *= -1;
+			this.angle = 180 - this.angle;
+		}
+		if(this.position.y < 0){
+			this.position.y = 0;
+			this.velocity.y *= -1;
+			this.angle = 360 - this.angle;
+		}
+		if(this.position.y > canvasHeight){
+			this.position.y = canvasHeight;
+			this.velocity.y *= -1;
+			this.angle = 360 - this.angle;
+		}
+		
+		//damped velocity
+		this.velocity.x *= this.traction;
+		if(Math.abs(this.velocity.x) < 0.01){
+			this.velocity.x = 0;
+		}
+		this.velocity.y *= this.traction;
+		if(Math.abs(this.velocity.y) < 0.01){
+			this.velocity.y = 0;
+		}
 	}
 }
 

@@ -4,7 +4,7 @@ import {Entity} from './modules/entity.js';
 
 let testEntity = new Entity(canvas.width/2,canvas.height/2);
 let cursorPos = {'x':0,'y':0};
-let TIME = 0.05;
+let TIME = 0.1;
 //called on page load
 window.onload = init();
 
@@ -32,7 +32,7 @@ function frame(){
 	//vision check
 	testEntity.findCursor(cursorPos);
 	testEntity.updatePosition(TIME, cursorPos);
-	testEntity.moveUnit(TIME);
+	testEntity.moveUnit(TIME,canvas.width,canvas.height);
 	//draws main screen
 	draw(testEntity);
 	window.requestAnimationFrame(frame);
