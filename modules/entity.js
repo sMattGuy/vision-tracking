@@ -7,7 +7,7 @@ class Entity{
 	acceleration = {'x':0,'y':0};
 	spotted = false;
 	//speed modifiers
-	maxspeed = 500;
+	maxspeed = 20;
 	speed = 1;
 	traction = 0.9;
 	constructor(xpos, ypos){
@@ -90,14 +90,14 @@ class Entity{
 			
 			if(otherOption < Math.abs(angleDiff)){
 				if(relativeAngle < cursorDeg){
-					this.angle -= (otherOption * time) * speed;	
+					this.angle -= (otherOption * time);	
 				}
 				else{
-					this.angle += (otherOption * time) * speed;	
+					this.angle += (otherOption * time);	
 				}
 			}
 			else{
-				this.angle += (angleDiff * time) * speed;	
+				this.angle += (angleDiff * time) * this.speed;	
 			}
 			
 			//move towards location
@@ -113,12 +113,6 @@ class Entity{
 		//update velocity
 		this.velocity.x += this.acceleration.x * time;
 		this.velocity.y += this.acceleration.y * time;
-		if(Math.abs(this.velocity.x) > this.maxspeed){
-			this.velocity.x = this.maxspeed * (this.velocity.x/Math.abs(this.velocity.x));
-		}
-		if(Math.abs(this.velocity.y) > this.maxspeed){
-			this.velocity.y = this.maxspeed * (this.velocity.y/Math.abs(this.velocity.y));
-		}
 		
 		//update position
 		this.position.x += this.velocity.x * time;

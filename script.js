@@ -4,7 +4,7 @@ import {Entity} from './modules/entity.js';
 
 let testEntity = new Entity(canvas.width/2,canvas.height/2);
 let cursorPos = {'x':0,'y':0};
-let TIME = 0.1;
+let TIME = 0.05;
 //called on page load
 window.onload = init();
 
@@ -16,6 +16,9 @@ document.getElementById('visionDistance').addEventListener('input', e => {
 });
 document.getElementById('angle').addEventListener('input', e => {
 	testEntity.angle = parseInt(e.srcElement.value);
+});
+document.getElementById('time').addEventListener('input', e => {
+	TIME = parseFloat(e.srcElement.value);
 });
 canvas.addEventListener('mousemove', e => {
 		cursorPos.x = e.offsetX;
