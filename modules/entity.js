@@ -2,10 +2,12 @@ class Entity{
 	visionDistance = 60;
 	visionRadius = 40;	//measured in degrees
 	angle = 40;
+	sweep_speed = 0.5;
 	position = {'x':0,'y':0};
 	velocity = {'x':0,'y':0};
 	acceleration = {'x':0,'y':0};
 	spotted = false;
+	last_move = 0;
 	//speed modifiers
 	maxspeed = 20;
 	speed = 1;
@@ -58,6 +60,7 @@ class Entity{
 	}
 	updatePosition(time, cursorPos){
 		if(this.spotted){
+			this.last_move = Date.now();
 			let entityAngleRads = this.angle * (Math.PI / 180);
 			let entityVisRads = this.visionRadius * (Math.PI / 180);
 			
@@ -107,6 +110,9 @@ class Entity{
 		else{
 			this.acceleration.x = 0;
 			this.acceleration.y = 0;
+			if(Date.now() - this.last_move > 10000){
+				this.angle += this.sweep_speed;
+			}
 		}
 	}
 	moveUnit(time,canvasWidth,canvasHeight){

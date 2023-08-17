@@ -17,6 +17,9 @@ document.getElementById('visionDistance').addEventListener('input', e => {
 document.getElementById('angle').addEventListener('input', e => {
 	testEntity.angle = parseInt(e.srcElement.value);
 });
+document.getElementById('sweep').addEventListener('input', e => {
+	testEntity.sweep_speed = parseFloat(e.srcElement.value);
+});
 document.getElementById('time').addEventListener('input', e => {
 	TIME = parseFloat(e.srcElement.value);
 });
